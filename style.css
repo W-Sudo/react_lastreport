@@ -21,7 +21,6 @@ h1, h2 {
 
 h1 {
   font-size: 5rem;
-  background: url(icons/bean_can.png) no-repeat 20% center, url(icons/bean_can.png) no-repeat 80% center;
   background-size: 48px 48px;
 }
 
