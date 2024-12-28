@@ -1,10 +1,12 @@
 import {useEffect,useState} from "react";
+import "./App.css";
 
 export default function App() {
-    const [day,setDay] = useState("");
-    const [month,setMonth]= useState("");
+    const [day,setDay] = useState(1);
+    const [month,setMonth]= useState(0);
     const [nameday,setNameDay]=useState("");
     const [haveClick,setHaveClick]=useState(false);
+    const [loading, setLoading] = useState(false);
     
     const headers = {
         "Content-Type": "application/json",
@@ -44,6 +46,8 @@ export default function App() {
         }catch(err){
             setDay(1);
             setMonth(month=>month+1);
+        }finally{
+          setTimeout(() => setLoading(false), 1100);
         }
         })();
       },[day,month]);
@@ -53,6 +57,7 @@ export default function App() {
         const date_num=Number(event.target.elements.searchDate.value.replace(/\/+/g, ""));
         setDay(date_num%100);
         setMonth(Math.floor(date_num/100));
+        setLoading(true);
         setHaveClick(true);
     }
     return (
@@ -79,12 +84,15 @@ export default function App() {
               </form>
             </aside>
             <main>
-            {haveClick&&(
+            {haveClick&&!loading&&(
                 <p>
                 最も近い名前の日は{nameday.month}月{nameday.day}日です。{nameday.nameday.gr}という名前を祝います。
                 </p>
               )
             }
+            {loading && (
+                <div class="animoSpinner"></div>
+            )}
               </main>
           </div>
           <footer>
